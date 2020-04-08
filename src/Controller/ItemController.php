@@ -70,6 +70,9 @@ class ItemController extends AbstractController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $item['title'] = $_POST['title'];
+            // verif coté serveur
+            // gestion erreur
+            // si pas erreur
             $itemManager->update($item);
         }
 

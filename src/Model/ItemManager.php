@@ -27,7 +27,6 @@ class ItemManager extends AbstractManager
         parent::__construct(self::TABLE);
     }
 
-
     /**
      * @param array $item
      * @return int
