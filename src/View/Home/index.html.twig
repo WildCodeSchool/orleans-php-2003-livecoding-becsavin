@@ -3,20 +3,12 @@
 {% block title %}Becs à Vin - Accueil{% endblock %}
 
 {% block content %}
-    <h1>Bienvenue chez Les Becs à Vin !</h1>
-    <h2>Bar à vin – Bistrot – Caviste</h2>
+    <header class="text-center my-5">
+        <h1>Bienvenue chez Les Becs à Vin !</h1>
+        <h2>Bar à vin – Bistrot – Caviste</h2>
+    </header>
 
-    <section>
-        <h2>Notre concept</h2>
-        <p>
-            Nous sélectionnons pour vous un choix de vins naturels en constante évolution.
-            Des vins issus de vignes cultivées dans le respect du vivant sans chimie polluante,
-            souvent en culture biologique ou en biodynamie, qui permettent de vinifier des vins
-            sans intrants œnologiques (levures, enzymes, acides, soufre, colle).
-            Ce sont des vins vivants et authentiques, véritables reflet d’un cépage sur un terroir,
-            des vins réalisés dans le respect de ceux qui les boivent…
-            Alors bon appétit et large soif !
-        </p>
-        <a href="#">Découvrez nos vins</a>
-    </section>
+    <main>
+    {% include 'Home/_concept.html.twig' %}
+    </main>
 {% endblock %}

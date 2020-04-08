@@ -21,6 +21,7 @@ body {
     color: var(--dark);
 }
 
+
 h1, h2, h3 {
     font-family: var(--title-font);
 }
@@ -32,4 +33,17 @@ h1, h2, h3 {
 .navbar {
     background-color: var(--main-color);
     color:var(--light);
+}
+
+.btn-primary {
+    background-color: var(--main-color);
+}
+.btn-primary:hover {
+    background-color: var(--main-lighter-color);
+}
+
+
+.concept-image {
+    width: 100%;
+    object-fit: cover;
 }
