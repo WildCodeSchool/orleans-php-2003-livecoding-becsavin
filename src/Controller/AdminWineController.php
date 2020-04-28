@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Model\WineManager;
+use DateTime;
 
 class AdminWineController extends AbstractController
 {
@@ -20,21 +21,21 @@ class AdminWineController extends AbstractController
             $wine = array_map('trim', $_POST);
 
             $errors = $this->validation($wine);
-            if(empty($errors)) {
+            if (empty($errors)) {
                 $wineManager = new WineManager();
                 $wineManager->insert($wine);
                 header('Location: /adminWine/index');
             }
         }
 
-        return $this->twig->render('AdminWine/add.html.twig', ['errors'=>$errors ?? [], 'wine'=> $wine ?? []]);
+        return $this->twig->render('AdminWine/add.html.twig', ['errors' => $errors ?? [], 'wine' => $wine ?? []]);
     }
 
     private function validation(array $wine): array
     {
         $wineNameLength = $producerLength = 255;
         $startYear = 1900;
-        $now = new \DateTime();
+        $now = new DateTime();
         $endYear = $now->format('Y');
 
         if (empty($wine['name'])) {
@@ -55,5 +56,4 @@ class AdminWineController extends AbstractController
 
         return $errors ?? [];
     }
-
 }
