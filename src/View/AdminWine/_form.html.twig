@@ -17,6 +17,16 @@
                max="{{ 'now'|date('Y') }}">
     </div>
 
+    <div class="form_group">
+        <label for="region">Region</label>
+        <select class="form-control" id="region" name="region_id">
+            {% for region in regions %}
+                <option value="{{ region.id }}">{{ region.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+
     <button class="btn btn-primary mt-5">Valider</button>
 
 </form>

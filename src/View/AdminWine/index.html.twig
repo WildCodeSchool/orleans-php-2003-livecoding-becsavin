@@ -3,30 +3,22 @@
 {% block title %}Administrer les vins{% endblock %}
 
 {% block content %}
-<main class="container-fluid">
-    <div class="text-center my-5">
-        <h1>Administrer la carte de nos vins</h1>
-        <a class="btn btn-primary" href="/adminWine/add">Ajouter un vin</a>
-        <table class="table table-hover">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Nom</th>
-                    <th>Couleur</th>
-                    <th>Producteur</th>
-                    <th>Année</th>
-                </tr>
-            </thead>
-            <tbody>
-        {% for wine in wines %}
-            <tr>
-                <td>{{ wine.name }}</td>
-                <td>{{ wine.color }}</td>
-                <td>{{ wine.producer }}</td>
-                <td>{{ wine.year }}</td>
-            </tr>
-        {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</main>
+    <main class="container-fluid">
+        <div>
+            <h1 class="text-center my-5">Administrer la carte de nos vins</h1>
+            <a class="btn btn-primary" href="/adminWine/add">Ajouter un vin</a>
+
+            {% for region, wines in winesGroupByRegions %}
+                <h2>{{ region }}</h2>
+                {% for wine in wines %}
+                    <div class="d-flex">
+                        <h3 class="ml-2">{{ wine.name }}</h3>
+                        <p>{{ wine.color }}
+                            {{ wine.producer }}
+                            {{ wine.year }}</p>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </main>
 {% endblock %}
