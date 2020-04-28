@@ -1,0 +1,22 @@
+<form method="post">
+    <input type="hidden" value="{{ item.id }}" name="id">
+
+    <div class="form-group">
+        <label for="name">Nom du vin</label>
+        <input required class="form-control" type="text" value="{{ wine.name }}" name="name" id="name">
+    </div>
+
+    <div class="form_group">
+        <label for="producer">Nom du producteur</label>
+        <input class="form-control" type="text" value="{{ wine.producer }}" name="producer" id="producer">
+    </div>
+
+    <div class="form_group">
+        <label for="year">Année</label>
+        <input class="form-control" type="number" value="{{ wine.year }}" name="year" id="year" min="1900"
+               max="{{ 'now'|date('Y') }}">
+    </div>
+
+    <button class="btn btn-primary mt-5">Valider</button>
+
+</form>

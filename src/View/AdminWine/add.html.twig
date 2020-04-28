@@ -1,0 +1,18 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Ajouter un vin{% endblock %}
+
+{% block content %}
+
+    <main class="container mt-5">
+        <h1>Ajouter un nouveau vin</h1>
+        <ul class="alert alert-danger">
+            {% for error in errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+        {% include 'AdminWine/_form.html.twig' %}
+
+        <a class="btn btn-outline-primary mt-2" href="/AdminWine/index">Retour</a>
+    </main>
+{% endblock %}
