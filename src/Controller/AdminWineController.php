@@ -12,11 +12,11 @@ class AdminWineController extends AbstractController
     {
         $wineManager = new WineManager();
         $winesWithRegions = $wineManager->selectAll();
-        foreach($winesWithRegions as $winesWithRegion) {
+        foreach ($winesWithRegions as $winesWithRegion) {
             $winesGroupByRegions[$winesWithRegion['region_name']][] = $winesWithRegion;
         }
 
-        return $this->twig->render('AdminWine/index.html.twig', ['winesGroupByRegions' => $winesGroupByRegions]);
+        return $this->twig->render('AdminWine/index.html.twig', ['winesGroupByRegions' => $winesGroupByRegions ?? []]);
     }
 
     public function add()
@@ -36,8 +36,8 @@ class AdminWineController extends AbstractController
         }
 
         return $this->twig->render('AdminWine/add.html.twig', [
-            'errors' => $errors ?? [],
-            'wine' => $wine ?? [],
+            'errors'  => $errors ?? [],
+            'wine'    => $wine ?? [],
             'regions' => $regions ?? [],
         ]);
     }
@@ -55,9 +55,8 @@ class AdminWineController extends AbstractController
             $errors[] = 'Le nom du vin doit faire moins de ' . $wineNameLength;
         }
 
-        if (isset($wine['producer']) && strlen($wine['producer']) > $producerLength) {
-            $errors[] = 'Le nom du producteur doit faire moins de ' . $producerLength;
-        }
+        $errors[] = $this->checkMaxLength($wine['producer'], 'producteur', $producerLength);
+
 
         if (isset($wine['year']) && !is_numeric($wine['year'])) {
             $errors[] = 'Le format de l\'année doit être un nombre entier';
@@ -65,10 +64,19 @@ class AdminWineController extends AbstractController
             $errors[] = 'L\'année doit être une valeur comprise entre ' . $startYear . ' and ' . $endYear;
         }
 
-        if(!in_array($wine['region_id'], array_column($regions, 'id'))) {
+        if (!in_array($wine['region_id'], array_column($regions, 'id'))) {
             $errors[] = 'La région est inconnue';
         }
 
         return $errors ?? [];
+    }
+
+    private function checkMaxLength(string $input, string $name, int $max): string
+    {
+        if (strlen($input) > $max) {
+            $error = 'Le champ ' . $name . ' doit être inférieur à ' . $max;
+        }
+
+        return $error ?? '';
     }
 }
