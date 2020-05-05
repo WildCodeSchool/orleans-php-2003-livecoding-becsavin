@@ -3,30 +3,26 @@
 {% block title %}Liste des vins{% endblock %}
 
 {% block content %}
-<main class="container-fluid">
+    <main class="container">
     <div class="text-center my-5">
         <h1>Carte de nos vins</h1>
-
-        <table class="table table-hover">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Nom</th>
-                    <th>Couleur</th>
-                    <th>Producteur</th>
-                    <th>Année</th>
-                </tr>
-            </thead>
-            <tbody>
-        {% for wine in wines %}
-            <tr>
-                <td>{{ wine.name }}</td>
-                <td>{{ wine.color }}</td>
-                <td>{{ wine.producer }}</td>
-                <td>{{ wine.year }}</td>
-            </tr>
-        {% endfor %}
-            </tbody>
-        </table>
     </div>
-</main>
+    {% for region, wines in winesGroupByRegions %}
+        <h2>{{ region }}</h2>
+        {% for wine in wines %}
+            <div class="d-flex justify-content-between wine">
+                <div class="">
+                    <span class="color" style="--wine-color: red">{{ wine.color }}</span>
+                    {{ wine.name }}
+                    <span>{{ wine.producer }}</span>
+                </div>
+                <div class="dot"></div>
+                <div>
+                    {{ wine.year }}
+                </div>
+                {# <img class="img-rounded" src="../uploads/{{ wine.image }}" alt="{{ wine.name }}"/>#}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    </main>
 {% endblock %}
