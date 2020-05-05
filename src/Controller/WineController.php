@@ -8,9 +8,14 @@ class WineController extends AbstractController
 {
     public function index()
     {
-        $wineManager = new WineManager();
-        $wines = $wineManager->selectAll();
+        $search = trim($_GET['search'] ?? '');
 
-        return $this->twig->render('Wine/index.html.twig', ['wines' => $wines]);
+        $wineManager = new WineManager();
+        $winesWithRegions = $wineManager->selectAll($search);
+        foreach ($winesWithRegions as $winesWithRegion) {
+            $winesGroupByRegions[$winesWithRegion['region_name']][] = $winesWithRegion;
+        }
+
+        return $this->twig->render('Wine/index.html.twig', ['winesGroupByRegions' => $winesGroupByRegions ?? []]);
     }
 }

@@ -42,8 +42,38 @@ h1, h2, h3 {
     background-color: var(--main-lighter-color);
 }
 
+.alert:empty{
+    display: none;
+}
 
 .concept-image {
     width: 100%;
     object-fit: cover;
 }
+
+.color {
+    --radius:10px;
+    --diameter: calc(var(--radius) * 2);
+    --wine-color:transparent;
+    display: inline-block;
+    width: var(--diameter);
+    height: var(--diameter);
+    border-radius: var(--radius);
+    border:1px solid var(--dark);
+    background-color: var(--wine-color);
+
+}
+
+.wine {
+}
+.wine .dot {
+    border-bottom:1px dotted var(--dark);
+    flex-grow: 1;
+    translate:0 -5px;
+}
+
+.wine-info span {
+    padding-left:var(--spacing);
+}
+
+
