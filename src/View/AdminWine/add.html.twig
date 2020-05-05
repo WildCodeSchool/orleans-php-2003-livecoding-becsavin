@@ -7,9 +7,9 @@
     <main class="container mt-5">
         <h1>Ajouter un nouveau vin</h1>
         <ul class="alert alert-danger">
-            {% for error in errors %}
+            {%- for error in errors %}
                 <li>{{ error }}</li>
-            {% endfor %}
+            {% endfor -%}
         </ul>
         {% include 'AdminWine/_form.html.twig' %}
 

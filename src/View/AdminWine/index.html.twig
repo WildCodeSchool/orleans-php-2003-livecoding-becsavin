@@ -3,23 +3,26 @@
 {% block title %}Administrer les vins{% endblock %}
 
 {% block content %}
-    <main class="container-fluid">
-        <div>
-            <h1 class="text-center my-5">Administrer la carte de nos vins</h1>
-            <a class="btn btn-primary" href="/adminWine/add">Ajouter un vin</a>
-
-            {% for region, wines in winesGroupByRegions %}
-                <h2>{{ region }}</h2>
-                {% for wine in wines %}
-                    <div class="d-flex">
-                        <h3 class="ml-2">{{ wine.name }}</h3>
-                        <p>{{ wine.color }}
-                            {{ wine.producer }}
-                            {{ wine.year }}</p>
-                        <img class="img-rounded" src="../uploads/{{ wine.image }}" alt="{{ wine.name }}"/>
+    <main class="container">
+        <h1>Administrer les vins</h1>
+        <a class="btn-primary btn" href="/adminWine/add">Ajouter un vin</a>
+        {% for region, wines in winesGroupByRegions %}
+            <h2>{{ region }}</h2>
+            {% for wine in wines %}
+                <div class="d-flex justify-content-between wine">
+                    <div class="d-flex wine-info">
+                        <span class="color" style="--wine-color: {{ wine.color }}"></span>
+                        <span>{{ wine.name }}</span>
+                        <span>{{ wine.producer }}</span>
+                        <span>{{ wine.year }}</span>
+{#                        <img src="../uploads/{{ wine.image }}" alt="{{ wine.name }}">#}
                     </div>
-                {% endfor %}
+                    <div class="dot"></div>
+                    <div>
+                        {{ wine.price }} €
+                    </div>
+                </div>
             {% endfor %}
-        </div>
+        {% endfor %}
     </main>
 {% endblock %}

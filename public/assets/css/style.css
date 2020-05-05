@@ -42,6 +42,9 @@ h1, h2, h3 {
     background-color: var(--main-lighter-color);
 }
 
+.alert:empty{
+    display: none;
+}
 
 .concept-image {
     width: 100%;
@@ -68,3 +71,9 @@ h1, h2, h3 {
     flex-grow: 1;
     translate:0 -5px;
 }
+
+.wine-info span {
+    padding-left:var(--spacing);
+}
+
+

@@ -7,6 +7,14 @@
     <div class="text-center my-5">
         <h1>Carte de nos vins</h1>
     </div>
+
+        <div>
+            <form method="get" action="/wine/index/">
+                <label for="search">Rechercher</label>
+                <input id="search" type="search" name="search">
+                <button>Chercher</button>
+            </form>
+        </div>
     {% for region, wines in winesGroupByRegions %}
         <h2>{{ region }}</h2>
         {% for wine in wines %}
@@ -15,12 +23,12 @@
                     <span class="color" style="--wine-color: red">{{ wine.color }}</span>
                     {{ wine.name }}
                     <span>{{ wine.producer }}</span>
+                    <span>{{ wine.year }}</span>
                 </div>
                 <div class="dot"></div>
                 <div>
-                    {{ wine.year }}
+                    {{ wine.price }} €
                 </div>
-                {# <img class="img-rounded" src="../uploads/{{ wine.image }}" alt="{{ wine.name }}"/>#}
             </div>
         {% endfor %}
     {% endfor %}

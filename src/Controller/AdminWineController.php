@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Model\RegionManager;
 use App\Model\WineManager;
+use App\Services\Uploader;
 use DateTime;
 
 class AdminWineController extends AbstractController
@@ -27,8 +28,15 @@ class AdminWineController extends AbstractController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $wine = array_map('trim', $_POST);
 
-            $errors = $this->validation($wine, $regions);
+            $dataErrors = $this->validation($wine, $regions);
+            $uploader = new Uploader($_FILES['image']);
+            $uploader->validate();
+            $errors = array_merge($dataErrors, $uploader->getErrors());
+
             if (empty($errors)) {
+                //upload du fichier
+                $wine['image'] = $uploader->upload();
+                // insertion en BDD
                 $wineManager = new WineManager();
                 $wineManager->insert($wine);
                 header('Location: /adminWine/index');
@@ -44,19 +52,21 @@ class AdminWineController extends AbstractController
 
     private function validation(array $wine, array $regions): array
     {
-        $wineNameLength = $producerLength = 255;
         $startYear = 1900;
         $now = new DateTime();
         $endYear = $now->format('Y');
 
-        if (empty($wine['name'])) {
-            $errors[] = 'Le nom du vin est requis';
-        } elseif (strlen($wine['name']) > $wineNameLength) {
-            $errors[] = 'Le nom du vin doit faire moins de ' . $wineNameLength;
+        $errors[] = $this->checkRequired($wine['name'], 'name');
+        $errors = array_merge($errors, $this->checkMaxLength($wine['name'], 'name'));
+        $errors[] = $this->checkRequired($wine['price'], 'prix');
+
+        if (isset($wine['price']) && !is_numeric($wine['price'])) {
+            $errors[] = 'Le prix du vin doit etre une valeur numérique';
+        } elseif ($wine['price'] < 0) {
+            $errors[] = 'Le prix du vin doit être positif';
         }
 
-        $errors[] = $this->checkMaxLength($wine['producer'], 'producteur', $producerLength);
-
+        $errors = array_merge($errors, $this->checkMaxLength($wine['producer'], 'producteur'));
 
         if (isset($wine['year']) && !is_numeric($wine['year'])) {
             $errors[] = 'Le format de l\'année doit être un nombre entier';
@@ -71,12 +81,21 @@ class AdminWineController extends AbstractController
         return $errors ?? [];
     }
 
-    private function checkMaxLength(string $input, string $name, int $max): string
+    private function checkRequired(string $input, string $name): array
     {
-        if (strlen($input) > $max) {
-            $error = 'Le champ ' . $name . ' doit être inférieur à ' . $max;
+        if (empty($input)) {
+            $error = ['Le champ ' . $name . ' est requis'];
         }
 
-        return $error ?? '';
+        return $error ?? [];
+    }
+
+    private function checkMaxLength(string $input, string $name, int $max = 255): array
+    {
+        if (strlen($input) > $max) {
+            $error = ['Le champ ' . $name . ' doit être inférieur à ' . $max];
+        }
+
+        return $error ?? [];
     }
 }
